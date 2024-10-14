@@ -10,6 +10,8 @@ export const Container = styled.div`
   align-items: center;
   border-right: 2px solid #d7d8d8;
   padding: 25px 0 25px 0;
+  background-color: white;
+  z-index: 100;
 `
 
 export const OptionsContainer = styled.div`

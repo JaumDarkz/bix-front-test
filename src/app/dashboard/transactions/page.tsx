@@ -1,8 +1,8 @@
-import DashboardComponent from '@/components/Dashboard/DashboardComponent';
+import TransactionsPageComponent from "@/components/Transactions/TransactionsPageComponent";
 
 const TransactionsPage = () => {
   return (
-    <DashboardComponent />
+    <TransactionsPageComponent />
   );
 };
 

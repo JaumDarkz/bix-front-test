@@ -2,6 +2,9 @@
 
 import Navbar from "@/components/Navbar/Navbar";
 import Sidebar from "@/components/Sidebar/Sidebar";
+import { useAuth } from "@/contexts/AuthContext";
+import { FilterProvider } from "@/contexts/FilterContext";
+import { transactionsData } from "@/lib/constants";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import styled from "styled-components";
@@ -13,18 +16,24 @@ export default function DashboardLayout({
 }>) {
   const router = useRouter()
 
+  const { isAuthenticated } = useAuth()
+
   useEffect(() => {
-    router.push('/dashboard/home')
+    if (!isAuthenticated) {
+      router.push('/login')
+    }
   })
 
   return (
-    <Container>
-      <Sidebar />
-      <NavbarContainer>
-        <Navbar />
-        <ContentContainer>{children}</ContentContainer>
-      </NavbarContainer>
-    </Container>
+    <FilterProvider transactions={transactionsData}>
+      <Container>
+        <Sidebar />
+        <NavbarContainer>
+          <Navbar />
+          <ContentContainer>{children}</ContentContainer>
+        </NavbarContainer>
+      </Container>
+    </FilterProvider>
   );
 }
 

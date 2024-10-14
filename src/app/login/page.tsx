@@ -1,45 +1,57 @@
-"use client"
+"use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import styled from 'styled-components';
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import styled from "styled-components";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "@/contexts/AuthContext";
 
 const LoginPage = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
+  const { login, isAuthenticated } = useAuth();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    // Simulação de autenticação
-    if (username === 'admin' && password === 'admin') {
-      localStorage.setItem('auth', 'true');
-      router.push('/dashboard');
+
+    if (username === "admin" && password === "admin") {
+      login();
+      router.push("/dashboard");
     } else {
-      alert('Credenciais inválidas');
+      toast.warn("Credenciais inválidas");
     }
   };
 
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.replace('/dashboard')
+    }
+  })
+
   return (
-    <LoginContainer>
-      <LoginForm onSubmit={handleLogin}>
-        <h2>Login</h2>
-        <Input
-          type="text"
-          placeholder="Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <Input
-          type="password"
-          placeholder="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <Button type="submit">Entrar</Button>
-      </LoginForm>
-    </LoginContainer>
+    <>
+      <ToastContainer theme="dark" />
+      <LoginContainer>
+        <LoginForm onSubmit={handleLogin}>
+          <h2>Login</h2>
+          <Input
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Button type="submit">Entrar</Button>
+        </LoginForm>
+      </LoginContainer>
+    </>
   );
 };
 

@@ -12,6 +12,8 @@ export const NavbarContainer = styled.div`
   border-bottom: 2px solid #d7d8d8;
   margin: 0 0 0 200px;
   padding: 0px 25px;
+  background-color: white;
+  z-index: 100;
 `
 export const NavbarOption = styled.div`
   display: flex;

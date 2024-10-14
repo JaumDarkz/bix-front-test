@@ -5,9 +5,11 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import React from 'react'
 import { Container, Option, OptionsContainer } from './Sidebar.styles'
+import { useAuth } from '@/contexts/AuthContext'
 
 const Sidebar = () => {
   const router = useRouter()
+  const { logout } = useAuth()
 
   return (
     <Container>
@@ -30,7 +32,7 @@ const Sidebar = () => {
       </OptionsContainer>
       
       <OptionsContainer>
-        <Option onClick={() => router.push('/')}>
+        <Option onClick={() => logout()}>
           <div>
             <Image src={logoutIcon} alt='Sair Icon' width={24} height={24} />
           </div>

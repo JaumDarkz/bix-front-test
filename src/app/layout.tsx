@@ -1,16 +1,16 @@
-'use client'
+"use client";
 
 import "./globals.css";
 import { ThemeProvider } from "styled-components";
 import { theme } from "@/styles/theme";
 import { GlobalStyle } from "@/styles/GlobalStyles";
-import { Montserrat } from 'next/font/google';
+import { Montserrat } from "next/font/google";
+import { AuthProvider } from "@/contexts/AuthContext";
 
 const montserrat = Montserrat({
-  subsets: ['latin'],
-  weight: ['400', '700'],
+  subsets: ["latin"],
+  weight: ["400", "700"],
 });
-
 
 export default function RootLayout({
   children,
@@ -20,10 +20,10 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <ThemeProvider theme={theme}>
-        <GlobalStyle />
-        <body className={montserrat.className}>
-          {children}
-        </body>
+        <AuthProvider>
+          <GlobalStyle />
+          <body className={montserrat.className}>{children}</body>
+        </AuthProvider>
       </ThemeProvider>
     </html>
   );
