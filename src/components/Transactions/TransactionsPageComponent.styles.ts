@@ -1,8 +1,27 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 16px;
-  background-color: #f9f9f9;
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  min-height: 100vh;
+
+  @media (max-width: 800px) {
+    flex-direction: column-reverse;
+  }
+`;
+
+export const Layout = styled.div`
+  width: 69%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+
+  @media (max-width: 800px) {
+    width: 100%;
+  }
 `;
 
 export const Title = styled.h1`
@@ -13,14 +32,15 @@ export const Title = styled.h1`
 `;
 
 export const TransactionsGrid = styled.div`
-  display: grid;
-  gap: 16px;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
 `;
 
-export const TransactionCard = styled.div<{ type: 'deposit' | 'withdrawal' }>`
+export const TransactionCard = styled.div<{ type: string }>`
   padding: 16px;
-  width: 500px;
+  width: 350px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -43,9 +63,10 @@ export const CardTitle = styled.h2`
 export const CardSubtitle = styled.span`
   font-size: 14px;
   color: #777;
+  text-align: end;
 `;
 
-export const Amount = styled.p<{ type: 'deposit' | 'withdrawal' }>`
+export const Amount = styled.p<{ type: string }>`
   font-size: 20px;
   font-weight: bold;
   color: ${(props) => (props.type === 'deposit' ? '#4CAF50' : '#FF5722')};
@@ -60,26 +81,47 @@ export const CardFooter = styled.div`
 `;
 
 export const PaginationContainer = styled.div`
-  width: 80vw;
   display: flex;
+  align-items: center;
   justify-content: center;
   margin-top: 20px;
-  overflow-x: scroll;
-  z-index: 199;
+  position: fixed;
+  bottom: 30px;
+  background: white;
+  padding: 10px 0;
+  z-index: 1; 
+  left: 50%;
+  border: 2px solid black;
+  border-radius: 20px;
+
+  @media (max-width: 800px) {
+    left: 0;
+    position: sticky;
+  }
 `;
 
-export const PaginationButton = styled.button<{ isActive: boolean }>`
-  background: ${(props) => (props.isActive ? '#333' : '#eee')};
-  color: ${(props) => (props.isActive ? '#fff' : '#333')};
+export const ArrowButton = styled.button`
+  background: none;
   border: none;
-  margin: 0 4px;
-  padding: 8px 12px;
-  border-radius: 4px;
   cursor: pointer;
-  transition: all 0.3s;
+  font-size: 20px;
+  padding: 0 15px;
+  color: black;
 
-  &:hover {
-    background: #333;
-    color: #fff;
+  &:disabled {
+    color: #ccc;
+    cursor: not-allowed;
+  }
+
+  &:hover:not(:disabled) {
+    color: #333;
+  }
+`;
+
+export const FilterContainer = styled.div`
+  width: 35%;
+
+  @media (max-width: 800px) {
+    width: 100%;
   }
 `;

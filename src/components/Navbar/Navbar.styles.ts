@@ -1,26 +1,28 @@
 import styled from "styled-components";
 
 export const NavbarContainer = styled.div`
-  width: calc(100% - 200px);
+  width: 100%;
   height: 50px;
   position: fixed;
   top: 0;
   left: 0;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid #d7d8d8;
-  margin: 0 0 0 200px;
-  padding: 0px 25px;
+  padding: 0 25px;
   background-color: white;
   z-index: 100;
-`
+  transition: width 0.3s ease, margin-left 0.3s ease;
+`;
+
 export const NavbarOption = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 0px 10px;
+  padding: 0 10px;
   border-radius: 100px;
+  margin-left: auto;
 
   img {
     border-radius: 100px;
@@ -28,9 +30,19 @@ export const NavbarOption = styled.div`
   }
 
   transition: 0.5s;
-  
+
   &:hover {
     cursor: pointer;
     background: #d7d8d8;
   }
-`
+`;
+
+export const HamburgerMenu = styled.div`
+  display: none;
+  cursor: pointer;
+  font-size: 1.5rem;
+
+  @media (max-width: 768px) {
+    display: block;
+  }
+`;

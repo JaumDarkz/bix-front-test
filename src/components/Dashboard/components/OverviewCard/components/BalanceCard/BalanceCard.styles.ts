@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 export const BalanceCardContainer = styled.div`
-  width: 180px;
+  width: 100%;
+  max-width: 180px;
+  min-width: fit-content;
   height: 102px;
   display: flex;
   flex-direction: column;

@@ -1,35 +1,44 @@
-'use client'
+// src/app/dashboard/layout.tsx
+'use client';
 
 import Navbar from "@/components/Navbar/Navbar";
 import Sidebar from "@/components/Sidebar/Sidebar";
 import { useAuth } from "@/contexts/AuthContext";
 import { FilterProvider } from "@/contexts/FilterContext";
-import { transactionsData } from "@/lib/constants";
+import { transactionsData } from "@/lib/constants"; // Ensure this points to your JSON file
+import { Transaction } from '@/lib/dto';
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-export default function DashboardLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  const router = useRouter()
+// Ensure Type Assertion
+const typedTransactionsData: Transaction[] = transactionsData as Transaction[];
 
-  const { isAuthenticated } = useAuth()
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+}
+
+export default function DashboardLayout({ children }: DashboardLayoutProps) {
+  const [isOpen, setIsOpen] = useState(true);
+  const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (!isAuthenticated) {
-      router.push('/login')
+      router.push('/login');
     }
-  })
+  }, [isAuthenticated, router]);
+
+  const toggleSidebar = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   return (
-    <FilterProvider transactions={transactionsData}>
+    <FilterProvider transactions={typedTransactionsData}>
       <Container>
-        <Sidebar />
-        <NavbarContainer>
-          <Navbar />
+        <Sidebar isOpen={isOpen} toggleSidebar={toggleSidebar} />
+        <NavbarContainer isOpen={isOpen}>
+          <Navbar toggleSidebar={toggleSidebar} />
           <ContentContainer>{children}</ContentContainer>
         </NavbarContainer>
       </Container>
@@ -37,19 +46,28 @@ export default function DashboardLayout({
   );
 }
 
+interface NavbarContainerProps {
+  isOpen: boolean;
+}
+
+const NavbarContainer = styled.div<NavbarContainerProps>`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  
+  padding-left: ${({ isOpen }) => (isOpen ? '200px' : '0px')};
+
+  @media (min-width: 768px) {
+    padding-left: 200px;
+  }
+`;
+
 const Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-`
-
-const NavbarContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  padding: 0 0 0 200px;
-`
+`;
 
 const ContentContainer = styled.div`
   padding: 50px 0 0 0;
-`
+`;

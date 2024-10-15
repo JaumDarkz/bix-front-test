@@ -3,18 +3,26 @@
 import { bixLogo } from "@/lib/constants";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+import styled from "styled-components";
 
 export default function DashboardPage () {
   const router = useRouter()
 
-  useEffect(() => {
+  
     router.push('/dashboard/home')
-  })
+
 
   return (
-    <div>
-      <Image src={bixLogo} alt="Logo" width={96} height={96} />
-    </div>
+    <Container>
+      <Image src={bixLogo} alt='Logo' width={300} style={{ filter: 'brightness(0)' }} />
+    </Container>
   );
 }
+
+const Container = styled.div`
+  width: 100%;
+  height: calc(100vh - 100px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`

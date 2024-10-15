@@ -1,7 +1,8 @@
 import styled from "styled-components";
+import { SidebarProps } from "./Sidebar";
 
-export const Container = styled.div`
-  width: 200px;
+export const Container = styled.div<SidebarProps>`
+  width: ${({ isOpen }) => (isOpen ? '200px' : '0')};
   height: 100vh;
   position: fixed;
   display: flex;
@@ -9,16 +10,26 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   border-right: 2px solid #d7d8d8;
-  padding: 25px 0 25px 0;
+  padding: 25px 0;
   background-color: white;
-  z-index: 100;
-`
+  z-index: 101;
+  transition: width 0.3s ease;
+  overflow: hidden;
+
+  @media (min-width: 768px) {
+    width: 200px;
+  }
+  
+  @media (max-width: 768px) {
+    width: ${({ isOpen }) => (isOpen ? '100%' : '0')};
+  }
+`;
 
 export const OptionsContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-`
+`;
 
 export const Option = styled.div`
   width: 100%;
@@ -26,22 +37,23 @@ export const Option = styled.div`
   gap: 10px;
   align-items: center;
   padding: 10px 15px;
-  font-weight: 600;
-
-  transition: 0.6s;
+  font-weight: 500;
+  cursor: pointer;
 
   img {
     margin-top: 5px;
   }
+`;
 
-  &:hover {
-    cursor: pointer;
-    background: black;
-    color: white;
-    
-    img {
-      transition: 0s;
-      filter: brightness(0) invert(1);
-    }
+export const CloseButton = styled.div`
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 1.5rem;
+  
+  @media (max-width: 768px) {
+    display: flex;
   }
-`
+`;

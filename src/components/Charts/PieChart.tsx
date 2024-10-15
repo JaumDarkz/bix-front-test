@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { PieChart as RechartsPieChart, Pie, Cell, Tooltip, Legend } from 'recharts';
 import { Transaction } from '@/lib/dto';
 
-interface PieChartProps {
+interface DynamicPieChartProps {
   data: Transaction[];
 }
 
-const PieChart: FC<PieChartProps> = ({ data }) => {
-  const transactionTypes = ['deposit', 'withdraw', 'pending'];
+const DynamicPieChart: FC<DynamicPieChartProps> = ({ data }) => {
+  const transactionTypes = ['deposit', 'withdraw'];
 
   const counts = transactionTypes.map(
     (type) => data.filter((transaction) => transaction.transaction_type === type).length
@@ -18,7 +18,7 @@ const PieChart: FC<PieChartProps> = ({ data }) => {
     value: counts[index],
   }));
 
-  const COLORS = ['#0088FE', '#00C49F', '#FFBB28'];
+  const COLORS = ['#4bc0c0', '#ff6384'];
 
   return (
     <RechartsPieChart width={400} height={400}>
@@ -26,11 +26,12 @@ const PieChart: FC<PieChartProps> = ({ data }) => {
         data={chartData}
         cx={200}
         cy={200}
+        labelLine={false}
         outerRadius={80}
         fill="#8884d8"
         dataKey="value"
       >
-        {chartData.map((_, index) => (
+        {chartData.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
       </Pie>
@@ -40,4 +41,4 @@ const PieChart: FC<PieChartProps> = ({ data }) => {
   );
 };
 
-export default PieChart;
+export default DynamicPieChart;

@@ -15,7 +15,6 @@ const BalanceCard = ({ icon, title, value }: Props) => {
 
   useEffect(() => {
     if (valueRef.current) {
-      // Verifica se o texto está sendo cortado
       const isOverflowing = valueRef.current.scrollWidth > valueRef.current.clientWidth;
       setIsTruncated(isOverflowing);
     }

@@ -3,15 +3,8 @@ import Image from "next/image";
 import React from "react";
 import BalanceCard from "./components/BalanceCard/BalanceCard";
 import { CardsRow, OverviewCardContainer, Title } from "./OverviewCard.styles";
-import AreaChart from "@/components/Charts/AreaChart/AreaChart";
-import { Transaction } from "@/lib/dto";
 
-type Props = {
-    depositData: Transaction[];
-    withdrawData: Transaction[];
-  }
-
-const OverviewCard: React.FC<Props> = ({ depositData, withdrawData }) => {
+const OverviewCard = () => {
   return (
     <OverviewCardContainer>
       <Title>
@@ -21,17 +14,12 @@ const OverviewCard: React.FC<Props> = ({ depositData, withdrawData }) => {
 
       <div>
         <CardsRow>
-          <BalanceCard icon={balanceIcon} title="Saldo" value="12,223,134,280.00" />
+          <BalanceCard icon={balanceIcon} title="Balance" value="6,552,543.56" />
 
-          <BalanceCard icon={incomeIcon} title="Receita" value="320,280.00" />
+          <BalanceCard icon={incomeIcon} title="Income" value="320,280.45" />
 
-          <BalanceCard icon={expenseIcon} title="Despesas" value="60,280.00" />
+          <BalanceCard icon={expenseIcon} title="Expenses" value="60,280.09" />
         </CardsRow>
-
-        <div>
-          <AreaChart data={depositData} label="Depósitos" color="rgba(54, 162, 235, 1)" />
-          <AreaChart data={withdrawData} label="Saques" color="rgba(255, 99, 132, 1)" />
-        </div>
       </div>
     </OverviewCardContainer>
   );
